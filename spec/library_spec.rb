@@ -5,26 +5,26 @@ describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
-    # binding.pry
+
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil
   end
 
-  xit "has a default status of available" do
-    book = Book.new
+  it "has a default status of available" do
+    book = Book.new("The Stranger", "Albert Camus")
     expect(book.status).to eq 'available'
   end
-
-  xit "can be checked out" do
-    book = Book.new
-    did_it_work = book.check_out
-    expect(did_it_work).to be_true
-    expect(book.status).to eq 'checked_out'
+#binding.pry
+  it "can be checked out" do
+    book = Book.new("The Stranger", "Albert Camus")
+    did_it_work = book.checked_out
+    expect(did_it_work).to eq(true)
+    expect(book.status).to eq 'check_out'
   end
 
-  xit "can't be checked out twice in a row" do
+  it "can't be checked out twice in a row" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
@@ -87,7 +87,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
@@ -190,7 +190,7 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(0)
 
     kors = Borrower.new("Michael Kors")
-    book = lib.check_out_book(lib.borrowed_books.first.id, kors)
+    book = lib.check_out_book(lib.available_books.first.id, kors)
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
